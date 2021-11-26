@@ -25,6 +25,10 @@ function checksExistsUserAccount(req, res, next) {
 app.post('/users', (req, res) => {
   const { name, username } = req.body
 
+  const foundUser = users.find(user => user.username === username)
+
+  if (foundUser) return res.status(400).json({ error: 'User already exists' })
+
   const userCreated = {
     id: uuidv4(),
     name,
