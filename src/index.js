@@ -38,7 +38,9 @@ app.post('/users', (req, res) => {
 });
 
 app.get('/todos', checksExistsUserAccount, (req, res) => {
-  res.json(req)
+  const { todos } = req.user
+
+  res.json(todos)
 });
 
 app.post('/todos', checksExistsUserAccount, (req, res) => {
