@@ -23,7 +23,18 @@ function checksExistsUserAccount(req, res, next) {
 }
 
 app.post('/users', (req, res) => {
-  res.json(req)
+  const { name, username } = req.body
+
+  const userCreated = {
+    id: uuidv4(),
+    name,
+    username,
+    todos: []
+  }
+
+  users.push(userCreated);
+
+  res.status(201).json(userCreated)
 });
 
 app.get('/todos', checksExistsUserAccount, (req, res) => {
