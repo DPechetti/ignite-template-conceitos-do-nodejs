@@ -86,7 +86,6 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (req, res) => {
   const {
     user: { todos },
     params: { id },
-    body: { title, deadline }
   } = req
 
   const todoIndexFound = todos.findIndex(todo => todo.id === id, 1)
@@ -102,7 +101,18 @@ app.patch('/todos/:id/done', checksExistsUserAccount, (req, res) => {
 });
 
 app.delete('/todos/:id', checksExistsUserAccount, (req, res) => {
-  res.json(req)
+  const {
+    user: { todos },
+    params: { id },
+  } = req
+
+  const todoIndexFound = todos.findIndex(todo => todo.id === id, 1)
+
+  if (todoIndexFound === -1) return res.status(404).json({ error: 'Todo not found' })
+
+  const todoDeleted = todos.splice(todoIndexFound, 1)
+
+  res.status(204).json({ error: "batata" })
 });
 
 module.exports = app;
