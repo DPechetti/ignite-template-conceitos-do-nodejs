@@ -44,7 +44,22 @@ app.get('/todos', checksExistsUserAccount, (req, res) => {
 });
 
 app.post('/todos', checksExistsUserAccount, (req, res) => {
-  res.json(req)
+  const {
+    user: { todos },
+    body: { title, deadline }
+  } = req
+
+  const todoCreated = {
+    id: uuidv4(),
+    title,
+    done: false,
+    deadline: new Date(deadline),
+    created_at: new Date()
+  }
+
+  todos.push(todoCreated);
+
+  res.status(201).json(todoCreated)
 });
 
 app.put('/todos/:id', checksExistsUserAccount, (req, res) => {
